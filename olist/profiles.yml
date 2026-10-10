@@ -1,0 +1,18 @@
+#profiles.yml tells dbt how to connect to your data platform. dbt itself doesn't store data. 
+#It sends SQL to Databricks to run, so before it can do anything it needs to know:
+#  Where to connect (which workspace)
+#  What to run the SQL on (which compute)
+#  Who you are (login credentials)
+#  Where to put new tables by default (catalog and schema)
+
+olist:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      host: dbc-b8665478-eeba.cloud.databricks.com
+      http_path: /sql/1.0/warehouses/33c4f75e566b4d0c
+      token: "{{ env_var('DATABRICKS_TOKEN') }}"
+      catalog: workspace
+      schema: olist_silver # the fallback schema to use if a model doesn't specify one
+      threads: 4

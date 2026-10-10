@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: workspace
+    schema: olist_bronze
+    tables:
+      - name: bronze_customers
+      - name: bronze_geolocation
+      - name: bronze_order_items
+      - name: bronze_order_payments
+      - name: bronze_order_reviews
+      - name: bronze_orders
+      - name: bronze_products
+      - name: bronze_sellers
+      - name: bronze_category_translation
