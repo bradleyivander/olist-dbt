@@ -5,7 +5,6 @@ with sources as (
 ),
 
 cleaned as (
-
     select
         customer_id,
         customer_unique_id,
@@ -14,7 +13,6 @@ cleaned as (
         lower(trim(customer_city))                              as customer_city,
         upper(trim(customer_state))                             as customer_state
     from sources
-
 )
 
 select * from cleaned
