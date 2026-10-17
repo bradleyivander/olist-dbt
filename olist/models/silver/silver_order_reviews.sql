@@ -18,3 +18,4 @@ select *,
     (review_comment_message is not null) as has_comment,
     (count(*) over (partition by review_id) > 1) is_shared_reviews
 from cleaned    
+
