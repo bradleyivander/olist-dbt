@@ -1,0 +1,70 @@
+# dbt schema.yml file
+
+version: 2
+
+models:
+
+  - name: fct_order_items
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [order_id, order_item_id]
+    columns:
+      - name: order_id
+        data_tests: 
+          - not_null
+      - name: product_id
+        data_tests: 
+          - not_null
+          - relationships:
+              arguments: 
+                to: ref('dim_products')
+                field: product_id
+      - name: seller_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_sellers')
+                field: seller_id
+      - name: customer_unique_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_unique_id
+      - name: is_delayed
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+                quote: false
+
+  - name: dim_products
+    columns:
+      - name: product_id
+        data_tests: [unique, not_null]
+
+  - name: dim_sellers   
+    columns:
+      - name: seller_id
+        data_tests: [unique, not_null]
+
+  - name: dim_customers
+    columns:
+      - name: customer_unique_id
+        data_tests: [unique, not_null]
+
+  - name: fct_order_reviews
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]
+      - name: review_score
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5]
+                quote: false
+
